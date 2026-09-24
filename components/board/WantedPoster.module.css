@@ -1,0 +1,161 @@
+.slot {
+  position: relative;
+  width: var(--pw);
+  aspect-ratio: 720 / 1077;
+  rotate: var(--rest-rotate);
+  translate: var(--rest-x) var(--rest-y);
+  animation: pin-in 0.8s cubic-bezier(0.22, 0.9, 0.32, 1.18) both;
+  animation-delay: calc(0.5s + var(--i) * 0.07s);
+}
+
+.poster {
+  --glare: 0;
+  --glare-x: 50;
+  --glare-y: 30;
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+  perspective: 1200px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.poster:focus-visible {
+  outline: none;
+}
+
+.poster:focus-visible .tilt {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 6px;
+}
+
+.shadow {
+  position: absolute;
+  inset: 2% 1.5% -1%;
+  border-radius: 3px;
+  background: rgb(26 9 2 / 0.7);
+  filter: blur(calc(var(--pw) * 0.025));
+  transform-origin: 50% 3%;
+  opacity: 0.75;
+  will-change: transform, opacity;
+}
+
+.tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.sway {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 3.5%;
+}
+
+.strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% / var(--strips));
+  transform-origin: 50% 0;
+  transform-style: preserve-3d;
+}
+
+.strip .strip {
+  top: 100%;
+  height: 100%;
+}
+
+.face {
+  position: absolute;
+  inset: 0 0 -1px;
+  background-image: var(--poster-image);
+  background-size: 100% calc(var(--strips) * 100%);
+  background-position: 0 calc(var(--strip) / (var(--strips) - 1) * 100%);
+  outline: 1px solid transparent;
+}
+
+.face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at calc(var(--glare-x) * 1%) calc(var(--glare-y) * 1%),
+    rgb(255 246 222 / 0.5),
+    rgb(255 246 222 / 0) 45%
+  );
+  background-size: 100% calc(var(--strips) * 100%);
+  background-position: 0 calc(var(--strip) / (var(--strips) - 1) * 100%);
+  opacity: var(--glare);
+}
+
+.light {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 228 176);
+  opacity: 0;
+}
+
+.nail {
+  position: absolute;
+  left: 50%;
+  top: 3.5%;
+  width: calc(var(--pw) * 0.055);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  transform: translateZ(3px);
+  background: radial-gradient(
+    circle at 36% 32%,
+    #f7e4b4 0 8%,
+    #b89259 30%,
+    #6b4c28 62%,
+    #2a1b0e
+  );
+  box-shadow: 0.6px 1.6px 2.5px rgb(0 0 0 / 0.6);
+  animation: nail-in 0.4s cubic-bezier(0.3, 1.8, 0.5, 1) both;
+  animation-delay: calc(1.05s + var(--i) * 0.07s);
+}
+
+@keyframes pin-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12%, 0) scale(1.16) rotate(6deg);
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nail-in {
+  from {
+    opacity: 0;
+    scale: 2.4;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot,
+  .nail {
+    animation: none;
+  }
+
+  .poster:hover .face {
+    filter: brightness(1.08);
+  }
+}

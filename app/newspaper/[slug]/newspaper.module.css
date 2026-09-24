@@ -1,0 +1,297 @@
+.page {
+  --rule: rgb(42 22 12 / 0.4);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: clamp(16px, 4.5vw, 48px) clamp(14px, 5vw, 60px) clamp(18px, 4vw, 36px);
+  color: var(--color-ink);
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(ellipse at 50% 38%, rgb(0 0 0 / 0) 55%, rgb(120 78 30 / 0.22)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.14 0 0 0 0 0.05 1 0 0 0 -0.54'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: auto, 180px 180px;
+  font-family: var(--font-news), Georgia, serif;
+}
+
+/* Fills the page so the credits sit at the foot of the sheet. */
+.sheet {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+/* Masthead */
+
+.masthead {
+  text-align: center;
+}
+
+.topline,
+.dateline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.topline {
+  padding-bottom: 8px;
+  border-bottom: 1px solid;
+}
+
+.title {
+  margin: 12px 0 10px;
+  font-family: var(--font-masthead), serif;
+  font-size: clamp(34px, 8.6vw, 80px);
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.dateline {
+  padding: 7px 0;
+  border-block: 3px double;
+}
+
+/* Headline */
+
+.kicker {
+  margin: clamp(22px, 4vw, 40px) 0 0;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.headline {
+  margin: 6px 0 0;
+  text-align: center;
+  font-family: var(--font-rye), serif;
+  font-size: clamp(38px, 8.5vw, 84px);
+  font-weight: 400;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+/* Rule with a dot in the middle. */
+.headline::after {
+  content: "";
+  display: block;
+  width: min(360px, 72%);
+  height: 8px;
+  margin: 16px auto 0;
+  background:
+    radial-gradient(circle, currentColor 0 3px, rgb(0 0 0 / 0) 3.5px) center / 8px 8px no-repeat,
+    linear-gradient(currentColor, currentColor) left center / calc(50% - 12px) 1px no-repeat,
+    linear-gradient(currentColor, currentColor) right center / calc(50% - 12px) 1px no-repeat;
+}
+
+/*
+ * Mobile: small photo beside the facts, story below.
+ * Wider: photo down the side, story on top of the facts.
+ */
+.story {
+  display: grid;
+  grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+  grid-template-areas:
+    "photo facts"
+    "text  text";
+  gap: 22px 18px;
+  margin-top: clamp(22px, 4vw, 40px);
+}
+
+.photo {
+  grid-area: photo;
+  position: relative;
+  align-self: start;
+  aspect-ratio: 4 / 5;
+  margin: 4px;
+  overflow: hidden;
+  border: 1px solid;
+  outline: 3px double;
+  outline-offset: 3px;
+  background: radial-gradient(circle at 50% 32%, #f4e8ca, #d3bd94 62%, #ae9169);
+}
+
+/* Old-print vignette over the picture. */
+.photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 26px rgb(70 40 12 / 0.4);
+}
+
+.image {
+  object-fit: cover;
+  object-position: 50% 0%;
+  filter: sepia(0.35) saturate(0.9) contrast(1.04);
+}
+
+.facts {
+  grid-area: facts;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  margin: 0;
+}
+
+.fact {
+  padding-bottom: 8px;
+  border-bottom: 1px dotted var(--rule);
+}
+
+.fact dt {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.fact dd {
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.text {
+  grid-area: text;
+}
+
+.text p {
+  margin: 0;
+  font-size: clamp(16.5px, 0.6vw + 14px, 19px);
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+
+.lede::first-letter {
+  float: left;
+  margin: 0.06em 0.1em 0 0;
+  font-family: var(--font-rye), serif;
+  font-size: 3.1em;
+  line-height: 0.85;
+}
+
+.subhead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 8px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.subhead::before,
+.subhead::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* Pushed to the foot of the sheet, but never glued to the story. */
+.credits {
+  margin-top: auto;
+  padding-top: clamp(28px, 5vw, 44px);
+  text-align: center;
+  font-size: 11.5px;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.credits::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 10px;
+  background: var(--rule);
+}
+
+/* Narrow sheets keep only the date; this also leaves the corner free for the
+   dialog's close button. */
+@media (max-width: 599px) {
+  .topline,
+  .wide {
+    display: none;
+  }
+
+  .title {
+    margin-top: 4px;
+  }
+
+  .dateline {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 600px) {
+  .story {
+    grid-template-columns: clamp(170px, 28%, 250px) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "photo text"
+      "photo facts";
+    gap: 24px 36px;
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-self: end;
+    gap: 0;
+    border-block: 3px double;
+  }
+
+  .fact {
+    padding: 11px 14px 12px;
+    border-bottom: 0;
+  }
+
+  .fact:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .fact:nth-child(even) {
+    border-left: 1px solid var(--rule);
+  }
+
+  .fact:nth-child(n + 3) {
+    border-top: 1px dotted var(--rule);
+  }
+
+  .fact dd {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 900px) {
+  /* Justified text only where the column is wide enough to avoid rivers. */
+  .text p {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fact:nth-child(n) {
+    padding-left: 14px;
+    border-top: 0;
+    border-left: 1px solid var(--rule);
+  }
+
+  .fact:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+}

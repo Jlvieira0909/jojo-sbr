@@ -1,0 +1,202 @@
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: transparent;
+  color: inherit;
+  display: grid;
+  place-items: center;
+}
+
+.dialog:not([open]) {
+  display: none;
+}
+
+.dialog::backdrop {
+  background: transparent;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  background: radial-gradient(
+    ellipse at center,
+    rgb(42 14 6 / 0.6),
+    rgb(16 5 2 / 0.88)
+  );
+  backdrop-filter: blur(5px) saturate(0.8);
+}
+
+.panel {
+  position: relative;
+  width: min(1080px, calc(100vw - 64px));
+  height: min(calc(100svh - 64px), 880px);
+  border-radius: 3px;
+  background-color: #efe3c6;
+  background-image:
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgb(0 0 0 / 0) 60%,
+      rgb(120 78 30 / 0.28)
+    ),
+    linear-gradient(rgb(255 250 235 / 0.35), rgb(0 0 0 / 0) 30%);
+  box-shadow:
+    0 30px 80px -20px rgb(0 0 0 / 0.85),
+    0 0 0 1px rgb(60 36 16 / 0.35);
+  will-change: transform;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: inherit;
+  visibility: hidden;
+}
+
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background-image: var(--poster-image);
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+.loader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  color: #3a2414;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.loader[data-visible="true"] {
+  opacity: 1;
+  transition-delay: 0.6s;
+}
+
+.ball {
+  position: relative;
+  width: 58px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 38% 34%,
+    #f1efe8,
+    #a9a79f 42%,
+    #54534d 78%,
+    #2c2b28
+  );
+  box-shadow: 0 12px 18px -8px rgb(40 20 5 / 0.65);
+}
+
+.ball::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgb(30 30 34 / 0.38) 0 5deg,
+    rgb(0 0 0 / 0) 5deg 30deg
+  );
+  animation: spin 0.9s linear infinite;
+}
+
+.ball::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 28%,
+    rgb(255 255 255 / 0.95) 0 7%,
+    rgb(255 255 255 / 0) 24%
+  );
+}
+
+.caption {
+  font-family: var(--font-fell), serif;
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.close {
+  position: absolute;
+  z-index: 3;
+  top: -18px;
+  right: -18px;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  color: #2b1a0c;
+  background: radial-gradient(circle at 35% 30%, #f7e6b8, #c99c57 45%, #7c5627);
+  box-shadow:
+    0 6px 14px rgb(0 0 0 / 0.45),
+    inset 0 0 0 2px rgb(60 35 12 / 0.45);
+  transition: filter 0.2s ease;
+}
+
+.close:hover {
+  filter: brightness(1.12);
+}
+
+.close:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.close svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (max-width: 640px) {
+  .panel {
+    width: calc(100vw - 20px);
+    height: calc(100svh - 20px);
+  }
+
+  .close {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ball::before {
+    animation-duration: 3s;
+  }
+}
